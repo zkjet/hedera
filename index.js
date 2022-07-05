@@ -6,14 +6,6 @@ const {
   Hbar,
 } = require("@hashgraph/sdk");
 require("dotenv").config();
-// const client = Client.forTestnet();
-//client.setOperator(myAccountId, myPrivateKey);
-
-//-----------------------<enter code below>--------------------------------------
-
-//Create new Keys
-const newAccountPrivateKey = await PrivateKey.generateED25519();
-const newAccountPublicKey = newAccountPrivateKey.publicKey;
 
 async function main() {
   // Grab your Hedera testnet account ID and private key from your .env file
@@ -31,5 +23,20 @@ async function main() {
   const client = Client.forTestnet();
 
   client.setOperator(myAccountId, myPrivateKey);
+
+  // const client = Client.forTestnet();
+  //client.setOperator(myAccountId, myPrivateKey);
+
+  //-----------------------<enter code below>--------------------------------------
+
+  //Create new Keys
+  const newAccountPrivateKey = await PrivateKey.generateED25519();
+  const newAccountPublicKey = newAccountPrivateKey.publicKey;
+
+  //Create a new account with 1,000 tinybar starting balance
+  const newAccount = await new AccountCreateTransaction()
+    .setKey(newAccountPublicKey)
+    .setInitialBalance(Hbar.fromTinybars(1000))
+    .execute(client);
 }
 main();
