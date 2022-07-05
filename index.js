@@ -38,5 +38,12 @@ async function main() {
     .setKey(newAccountPublicKey)
     .setInitialBalance(Hbar.fromTinybars(1000))
     .execute(client);
+// Get the new account ID
+const getReceipt = await newAccount.getReceipt(client);
+const newAccountId = getReceipt.accountId;
+
+console.log("The new account ID is: " +newAccountId);
+
+// Verify the account balance
 }
 main();
