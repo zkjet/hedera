@@ -39,5 +39,12 @@ async function main() {
         `${message.consensusTimestamp.toDate()} Received: ${messageAsString}`
       );
     });
+    //Send one message
+    let sendResponse = await new TopicMessageSubmitTransaction({
+        topicid: topicId,
+        message: "Hello, HCS!",
+    }).execute(client);
+    const getReceipt = await sendResponse.getReceipt(client)
+    
 }
 main();
